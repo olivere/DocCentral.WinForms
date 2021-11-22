@@ -138,7 +138,7 @@ namespace DocCentral.WinForms.Views
             // 
             // bindingSourcePatient
             // 
-            this.bindingSourcePatient.DataSource = typeof(DocCentral.WinForms.ViewModels.PatientEditViewModel.PatientModel);
+            this.bindingSourcePatient.DataSource = typeof(DocCentral.WinForms.Models.Patient);
             // 
             // bindingSource
             // 

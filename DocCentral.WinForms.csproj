@@ -196,10 +196,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\PatientDTO.cs" />
     <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\PatientSearchResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Services\FakePatientService.cs" />
-    <Compile Include="Services\ILiteDBConfiguration.cs" />
     <Compile Include="Services\IPatientService.cs" />
     <Compile Include="Services\LiteDBConfiguration.cs" />
     <Compile Include="Services\LiteDBPatientService.cs" />
@@ -244,6 +245,7 @@
     <EmbeddedResource Include="Views\ShellView.resx">
       <DependentUpon>ShellView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="DTOs\README.md" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DocCentral.WinForms.ViewModels.PatientEditViewModel+PatientModel.datasource" />
     <None Include="Properties\DataSources\DocCentral.WinForms.ViewModels.PatientEditViewModel.datasource" />

@@ -1,15 +1,16 @@
-﻿using DocCentral.WinForms.Models;
+﻿using DocCentral.WinForms.DTOs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DocCentral.WinForms.Services
 {
+    /// <summary>
+    /// Eine Implementierung der Schnittstelle <see cref="IPatientService"/>
+    /// für Unit-Tests.
+    /// </summary>
     public class FakePatientService : IPatientService
     {
-        public Task<Patient> GetPatientByIdAsync(int id)
+        public Task<PatientDTO> GetPatientByIdAsync(int id)
         {
             throw new NotImplementedException();
         }

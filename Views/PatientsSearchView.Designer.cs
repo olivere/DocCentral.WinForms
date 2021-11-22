@@ -91,7 +91,6 @@ namespace DocCentral.WinForms.Views
             this.dataGrid.Size = new System.Drawing.Size(596, 364);
             this.dataGrid.TabIndex = 2;
             this.dataGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridOnCellDoubleClick);
-            this.dataGrid.SelectionChanged += new System.EventHandler(this.DataGridOnSelectionChanged);
             // 
             // btnClose
             // 

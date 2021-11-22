@@ -1,4 +1,4 @@
-﻿using DocCentral.WinForms.Models;
+﻿using DocCentral.WinForms.DTOs;
 using LiteDB;
 using Microsoft.Extensions.Logging;
 using System;
@@ -38,7 +38,7 @@ namespace DocCentral.WinForms.Services
         /// <summary>
         /// Zugriff auf die Patiententabelle.
         /// </summary>
-        private ILiteCollection<Patient> Patients => Database.GetCollection<Patient>("patients");
+        private ILiteCollection<PatientDTO> Patients => Database.GetCollection<PatientDTO>("patients");
 
         /// <summary>
         /// Stellt sicher, dass die Patiententabelle korrekt initialisiert ist.
@@ -53,7 +53,7 @@ namespace DocCentral.WinForms.Services
             if (count == 0)
             {
                 // Füge ein paar Testdaten ein
-                Patients.Insert(Patient.PreviewData);
+                Patients.Insert(PatientDTO.PreviewData);
             }
         }
 
@@ -62,7 +62,7 @@ namespace DocCentral.WinForms.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Patient oder <see langword="null"/></returns>
-        public Task<Patient> GetPatientByIdAsync(int id)
+        public Task<PatientDTO> GetPatientByIdAsync(int id)
         {
             return Task.FromResult(Patients.FindById(id));
         }
@@ -84,7 +84,7 @@ namespace DocCentral.WinForms.Services
 
                 if (!string.IsNullOrWhiteSpace(request.Keywords))
                 {
-                    Expression<Func<Patient, bool>> expr = p => p.FirstName.Contains(request.Keywords) || p.LastName.Contains(request.Keywords);
+                    Expression<Func<PatientDTO, bool>> expr = p => p.FirstName.Contains(request.Keywords) || p.LastName.Contains(request.Keywords);
                     countQ = countQ.Where(expr);
                     dataQ = dataQ.Where(expr);
                 }
@@ -120,7 +120,7 @@ namespace DocCentral.WinForms.Services
         /// <param name="query">Query für LiteDB</param>
         /// <param name="sortOrders">Sortierreihenfolge</param>
         /// <returns>Modifizierter Query</returns>
-        public static ILiteQueryable<Patient> ApplySortOrder(this ILiteQueryable<Patient> query, PatientSortOrder sortOrder)
+        public static ILiteQueryable<PatientDTO> ApplySortOrder(this ILiteQueryable<PatientDTO> query, PatientSortOrder sortOrder)
         {
             switch (sortOrder)
             {

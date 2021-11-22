@@ -52,6 +52,10 @@ namespace DocCentral.WinForms.ViewModels
             set => SetProperty(ref _blankslate, value);
         }
 
+        /// <summary>
+        /// Hilfe für das Datenbinden, um auch leicht an den
+        /// Nicht-Blankslate-Zustand binden zu können.
+        /// </summary>
         public bool NotBlankslate => !Blankslate;
 
         private bool _blankslate = true;
@@ -99,7 +103,7 @@ namespace DocCentral.WinForms.ViewModels
         }
 
         /// <summary>
-        /// Text für die Paginierung: 1-10 von 100.
+        /// Text für die Paginierung: "1-10 von 100" oder "Keine Treffer".
         /// </summary>
         public string Paginator
         {
@@ -117,13 +121,13 @@ namespace DocCentral.WinForms.ViewModels
         /// <summary>
         /// Treffer im Suchergebnis.
         /// </summary>
-        public ObservableCollection<SearchResult> Results
+        public ObservableCollection<PatientSearchResult> Results
         {
             get => _results;
             set => SetProperty(ref _results, value);
         }
 
-        private ObservableCollection<SearchResult> _results;
+        private ObservableCollection<PatientSearchResult> _results;
 
         /// <summary>
         /// Suchstichwort des Benutzers. Diese Eigenschaft wird im View
@@ -161,8 +165,8 @@ namespace DocCentral.WinForms.ViewModels
         {
             _lastSearchResponse = await _patientService.SearchPatientsAsync(_lastSearchRequest);
 
-            Results = new ObservableCollection<SearchResult>(
-                _lastSearchResponse.Data.Select(p => new SearchResult(p))
+            Results = new ObservableCollection<PatientSearchResult>(
+                _lastSearchResponse.Data.Select(p => new PatientSearchResult(p))
             );
             Blankslate = false;
         }
@@ -185,40 +189,6 @@ namespace DocCentral.WinForms.ViewModels
         {
             _lastSearchRequest.Page--;
             await ExecuteSearchAsync();
-        }
-
-        /// <summary>
-        /// Ein einzelnes Suchergebnis. Diese Modelle können sich durchaus
-        /// aus unterschiedlichen Entitäten zusammensetzen, z.B. einem Patient
-        /// mit Adresse, Arbeitgeber und Krankheitsakte.
-        /// </summary>
-        public class SearchResult : ObservableObject
-        {
-            private readonly Patient _patient;
-
-            /// <summary>
-            /// Konstruktor.
-            /// </summary>
-            /// <param name="patient">Patient</param>
-            public SearchResult(Patient patient)
-            {
-                _patient = patient;
-            }
-
-            /// <summary>
-            /// Id des Patienten.
-            /// </summary>
-            public int Id => _patient.Id;
-
-            /// <summary>
-            /// Zusammengesetzter Name aus Vor- und Nachname.
-            /// </summary>
-            public string DisplayName => $"{_patient.FirstName} {_patient.LastName}";
-
-            /// <summary>
-            /// Geburtsdatum bestehend aus Tag, Monat und Jahr.
-            /// </summary>
-            public string DateOfBirthFormatted => _patient.DateOfBirth.ToString("d");
         }
     }
 }
