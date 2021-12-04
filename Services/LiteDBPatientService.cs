@@ -106,6 +106,25 @@ namespace DocCentral.WinForms.Services
                 return response;
             });
         }
+
+        /// <summary>
+        /// Aktualisiert einen bestehenden Patienten. Kommt es bei der Aktualisierung
+        /// zu einem Fehler, so wird eine Ausnahme geworfen.
+        /// </summary>
+        /// <param name="request">Zu aktualisierender Patient</param>
+        public async Task UpdateAsync(UpdatePatientRequest request)
+        {
+            var dto = await GetPatientByIdAsync(request.Id);
+            dto.FirstName = request.FirstName;
+            dto.LastName = request.LastName;
+            dto.DateOfBirth = request.DateOfBirth;
+
+            var success = Patients.Update(dto);
+            if (!success)
+            {
+                throw new ApplicationException($"Patient {request.Id} wurde nicht gefunden");
+            }
+        }
     }
 
     /// <summary>

@@ -104,7 +104,7 @@ namespace DocCentral.WinForms.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DataGridOnCellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private async void DataGridOnCellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // Da das DataGrid direkt an Instanzen des Typs PatientSearchResult bindet,
             // können wir hier direkt auf die gebundene Instanz zugreifen
@@ -114,7 +114,8 @@ namespace DocCentral.WinForms.Views
             var editView = new PatientEditView(result.Id);
             if (editView.ShowDialog() == DialogResult.OK)
             {
-                // TODO Hier müssen wir nun das DataGrid aktualisieren
+                // Hier müssen wir nun das DataGrid aktualisieren
+                await ViewModel.SearchAsync();
             }
         }
     }

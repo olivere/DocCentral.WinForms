@@ -18,6 +18,10 @@ namespace DocCentral.WinForms.Views
     {
         private readonly int _patientId;
 
+        /// <summary>
+        /// Konstruktor des Fensters.
+        /// </summary>
+        /// <param name="patientId">Zu bearbeitender Patient</param>
         public PatientEditView(int patientId)
         {
             _patientId = patientId;
@@ -58,11 +62,24 @@ namespace DocCentral.WinForms.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveOnClick(object sender, EventArgs e)
+        private async void SaveOnClick(object sender, EventArgs e)
         {
-            MessageBox.Show("Speichern ist noch nicht implementiert", "Hinweis", MessageBoxButtons.OK);
+            try
+            {
+                await ViewModel.UpdateAsync();
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Das Aktualisieren ist fehlgeschlagen:" +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    ex.Message,
+                    "Fehler",
+                    MessageBoxButtons.OK);
+            }
 
-            Close();
         }
 
         /// <summary>
