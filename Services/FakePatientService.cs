@@ -19,5 +19,15 @@ namespace DocCentral.WinForms.Services
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Aktualisiert einen bestehenden Patienten. Kommt es bei der Aktualisierung
+        /// zu einem Fehler, so wird eine Ausnahme geworfen.
+        /// </summary>
+        /// <param name="request">Zu aktualisierender Patient</param>
+        public Task UpdateAsync(UpdatePatientRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

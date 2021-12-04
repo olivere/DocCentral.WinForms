@@ -47,5 +47,28 @@ namespace DocCentral.WinForms.ViewModels
             var patientDto = await _patientService.GetPatientByIdAsync(patientId);
             Patient = new Patient(patientDto);
         }
+
+        /// <summary>
+        /// Aktualisiert den Patienten. Es ist Aufgabe des Aufrufers, anschließend
+        /// den neuen Patienten zu laden (sofern dies notwendig ist). Kommt es beim
+        /// Aktualisieren zu einem Fehler, so wird eine Ausnahme geworfen.
+        /// </summary>
+        /// <returns><see cref="Task"/></returns>
+        public async Task UpdateAsync()
+        {
+            if (_patient == null)
+            {
+                throw new InvalidOperationException("Patient muss geladen werden bevor er gespeichert werden kann");
+            }
+
+            var request = new UpdatePatientRequest(Patient.Id)
+            {
+                FirstName = Patient.FirstName,
+                LastName = Patient.LastName,
+                DateOfBirth = Patient.DateOfBirth,
+            };
+
+            await _patientService.UpdateAsync(request);
+        }
     }
 }

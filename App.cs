@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DocCentral.WinForms
@@ -22,6 +23,8 @@ namespace DocCentral.WinForms
         {
             Host = Configure();
         }
+
+        public static LiteDatabase DB;
 
         /// <summary>
         /// Stellt den Zugriff auf die Applikationsklasse bereit.
@@ -80,8 +83,7 @@ namespace DocCentral.WinForms
             //services.AddLogging(logging => logging.AddConsole());
 
             // Services für den Zugriff auf Patientendaten konfigurieren
-            var db = new LiteDatabase(":memory:");
-            services.AddSingleton<ILiteDBConfiguration>(new LiteDBConfiguration(db));
+            services.AddSingleton<ILiteDBConfiguration>(new LiteDBConfiguration(DB));
             services.AddSingleton<IPatientService, LiteDBPatientService>();
 
             // Konfiguriere Zugriff auf ViewModel von den Views aus
